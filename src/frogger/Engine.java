@@ -19,6 +19,8 @@ public class Engine {
     private int stepLen;
     private int sizeX;
     private int sizeY;
+    private int winsq;
+    private int deathsq;
     
     public Engine() {
         Window GameWindow = new Window();
@@ -30,6 +32,24 @@ public class Engine {
         this.cY = 500;
         
         this.stepLen = 50;
+        
+        this.deathsq = 0;
+        this.winsq = 0;
+        
+        JLabel deaths = new JLabel();
+        deaths.setText("Deaths: " + this.deathsq);
+        deaths.setForeground(Color.WHITE);
+        deaths.setFont(new Font("Seif", Font.PLAIN, 12));
+        GameWindow.add(deaths);
+        deaths.setBounds(10, 10, 100, 12);
+        
+        JLabel wins = new JLabel();
+        wins.setText("Wins: " + this.winsq);
+        wins.setForeground(Color.WHITE);
+        wins.setFont(new Font("Seif", Font.PLAIN, 12));
+        GameWindow.add(wins);
+        wins.setBounds(10, 27, 100, 12);
+        
         
         JLabel frog = new JLabel();
         frog.setText("@");
@@ -43,7 +63,7 @@ public class Engine {
         car1.setForeground(Color.WHITE);
         car1.setFont(new Font("Seif", Font.PLAIN, 20));
         
-        Vehicle Truck = new Vehicle(GameWindow, car1);
+        Vehicle Truck = new Vehicle(GameWindow, car1, frog);
         
         GameWindow.addKeyListener(new KeyListener() {
             @Override
@@ -65,6 +85,8 @@ public class Engine {
                 }
                 if(checkWin()) {
                     System.out.println("WIN!!"); //win animation :D
+                    winsq += 1;
+                    wins.setText("Wins: " + winsq);
                 }             
             }
         });
@@ -76,13 +98,5 @@ public class Engine {
         } else {
             return false;
         }
-    }
-    
-    public boolean intersects(JLabel test_a, JLabel test_b){
-        Rectangle rectB = test_b.getBounds();
-
-        Rectangle result = SwingUtilities.computeIntersection(test_a.getX(), test_a.getY(), test_a.getWidth(), test_a.getHeight(), rectB);
-
-        return (result.getWidth() > 0 && result.getHeight() > 0);
     }
 }
