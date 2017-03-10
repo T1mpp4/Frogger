@@ -11,8 +11,10 @@ import java.awt.Rectangle;
 import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.util.Timer;
+import javax.swing.Timer;
 import javax.swing.SwingUtilities;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -32,7 +34,29 @@ public class Vehicle {
     }
     
     public static void Move(JFrame window, int speed, JLabel object, JLabel frog, int vsizeX, int vsizeY) {
-        Timer t = new Timer();
+        
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int vX = object.getX();
+                int vY = object.getY();
+                
+                vX += 10;
+                
+                object.setBounds(vX, vY, vsizeX, vsizeY);
+                
+                window.repaint();
+                
+                if(Collision(object, frog)) {
+                    System.out.println("COLLISION");
+                }
+            }
+        };
+        Timer timer = new Timer(175, actionListener );
+        timer.start();
+
+        
+        /*Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -49,7 +73,7 @@ public class Vehicle {
                     System.out.println("COLLISION");
                 }
             }
-        }, 0, 175);
+        }, 0, 175);*/
     }
     
     public static boolean Collision(JLabel test_a, JLabel test_b){
