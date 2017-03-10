@@ -5,6 +5,8 @@
  */
 package frogger;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.util.TimerTask;
 import javax.swing.JFrame;
@@ -17,14 +19,19 @@ import javax.swing.SwingUtilities;
  * @author timi
  */
 public class Vehicle {
-    public Vehicle(JFrame window, JLabel car, JLabel frog) {
-        car.setBounds(20, 400, 200, 100);
+    public Vehicle(JFrame window, JLabel car, JLabel frog, int level) {
+        int vLevel = 450 - 50 * level;
+        car.setBounds(20, vLevel, 200, 100);
         window.add(car);
         
-        Move(50, car, frog, 140, 100);
+        car.setForeground(Color.WHITE);
+        car.setFont(new Font("Seif", Font.PLAIN, 20));
+        
+        Move(window, 50, car, frog, 140, 100);
+        
     }
     
-    public static void Move(int speed, JLabel object, JLabel frog, int vsizeX, int vsizeY) {
+    public static void Move(JFrame window, int speed, JLabel object, JLabel frog, int vsizeX, int vsizeY) {
         Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
@@ -35,6 +42,8 @@ public class Vehicle {
                 vX += 10;
                 
                 object.setBounds(vX, vY, vsizeX, vsizeY);
+                
+                window.repaint();
                 
                 if(Collision(object, frog)) {
                     System.out.println("COLLISION");
