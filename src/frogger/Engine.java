@@ -1,10 +1,15 @@
 package frogger;
 
+import static frogger.Vehicle.Collision;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -16,25 +21,25 @@ import javax.swing.SwingUtilities;
 public class Engine {
     public int cX;
     public int cY;
-    private int stepLen;
+    private double stepLen;
     private int sizeX;
     private int sizeY;
     private int winsq;
     private int deathsq;
     
-    public Engine() {
-        Window GameWindow = new Window();
-        
+    public Engine() {        
         this.sizeX = 20;
         this.sizeY = 20;
         
         this.cX = 400;
         this.cY = 500;
         
-        this.stepLen = 50;
+        this.stepLen = 50.5;
         
         this.deathsq = 0;
         this.winsq = 0;
+        
+        Window GameWindow = new Window(this.stepLen);
         
         JLabel deaths = new JLabel();
         deaths.setText("Deaths: " + this.deathsq);
@@ -58,13 +63,8 @@ public class Engine {
         GameWindow.add(frog);
         frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
         
-        JLabel car1 = new JLabel();
-        car1.setText("|=====|-| |");
-        car1.setForeground(Color.WHITE);
-        car1.setFont(new Font("Seif", Font.PLAIN, 20));
-        
-        Vehicle Truck = new Vehicle(GameWindow, car1, frog);
-        
+        driveCars(GameWindow, frog);
+                
         GameWindow.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -82,11 +82,13 @@ public class Engine {
                     System.out.println(cY);
                     cY -= stepLen;
                     frog.setBounds(cX, cY, 20, 20);
+                    GameWindow.repaint();
                 }
                 if(checkWin()) {
                     System.out.println("WIN!!"); //win animation :D
                     winsq += 1;
                     wins.setText("Wins: " + winsq);
+                    GameWindow.repaint();
                 }             
             }
         });
@@ -98,5 +100,36 @@ public class Engine {
         } else {
             return false;
         }
+    }
+    
+    public void driveCars(JFrame GameWindow, JLabel frog) {
+        int Delay = Randomize(100, 4000);
+        
+        JLabel car1 = new JLabel();
+        car1.setText("|=====|-| |");
+        
+        JLabel car2 = new JLabel();
+        car2.setText("<|=|>");
+        
+        Vehicle Truck = new Vehicle(GameWindow, car1, frog, 1);    
+        Vehicle Car = new Vehicle(GameWindow, car2, frog, 3);
+        
+        System.out.println(Delay);
+        
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Vehicle newCar  = new Vehicle(GameWindow, car1, frog, Randomize(1, 10));
+                
+                GameWindow.repaint();
+            }
+        }, 0, Delay);
+        
+    }
+    
+    public int Randomize(int low, int high) {
+        return (int) (Math.random() * (high - low)) + low;
+
     }
 }
