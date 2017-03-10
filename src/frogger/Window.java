@@ -3,6 +3,7 @@ package frogger;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,8 +39,13 @@ public class Window extends JFrame {
         setFocusable(true);
         requestFocusInWindow();
         
-        
-
         this.setVisible(true);
+    }
+    
+    @Override
+    public void paint(Graphics g) 
+    {
+        g.setColor(Color.WHITE);
+        g.drawRect(5, 5, 105, 105);
     }
 }
