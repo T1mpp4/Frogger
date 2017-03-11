@@ -12,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
@@ -39,20 +40,25 @@ public class Engine {
         this.deathsq = 0;
         this.winsq = 0;
         
-        Window GameWindow = new Window(this.stepLen);
+        //Window GameWindow = new Window(this.stepLen);
+        GameFrame gFrame = new GameFrame();
+        GameCanvas gCanvas = new GameCanvas();
+        
+        gFrame.add(gCanvas);
+        gFrame.pack();
         
         JLabel deaths = new JLabel();
         deaths.setText("Deaths: " + this.deathsq);
         deaths.setForeground(Color.WHITE);
         deaths.setFont(new Font("Seif", Font.PLAIN, 12));
-        GameWindow.add(deaths);
+        gCanvas.add(deaths);
         deaths.setBounds(10, 10, 100, 12);
         
         JLabel wins = new JLabel();
         wins.setText("Wins: " + this.winsq);
         wins.setForeground(Color.WHITE);
         wins.setFont(new Font("Seif", Font.PLAIN, 12));
-        GameWindow.add(wins);
+        gCanvas.add(wins);
         wins.setBounds(10, 27, 100, 12);
         
         
@@ -60,12 +66,12 @@ public class Engine {
         frog.setText("@");
         frog.setForeground(Color.WHITE);
         frog.setFont(new Font("Seif", Font.PLAIN, 20));
-        GameWindow.add(frog);
+        gCanvas.add(frog);
         frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
         
-        driveCars(GameWindow, frog);
+        driveCars(gCanvas, frog);
                 
-        GameWindow.addKeyListener(new KeyListener() {
+        gFrame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
             
@@ -82,13 +88,13 @@ public class Engine {
                     System.out.println(cY);
                     cY -= stepLen;
                     frog.setBounds(cX, cY, 20, 20);
-                    GameWindow.repaint();
+                    gCanvas.repaint();
                 }
                 if(checkWin()) {
                     System.out.println("WIN!!"); //win animation :D
                     winsq += 1;
                     wins.setText("Wins: " + winsq);
-                    GameWindow.repaint();
+                    gCanvas.repaint();
                 }             
             }
         });
@@ -102,7 +108,7 @@ public class Engine {
         }
     }
     
-    public void driveCars(JFrame GameWindow, JLabel frog) {
+    public void driveCars(JPanel gCanvas, JLabel frog) {
         int Delay = Randomize(100, 4000);
         
         JLabel car1 = new JLabel();
@@ -111,8 +117,8 @@ public class Engine {
         JLabel car2 = new JLabel();
         car2.setText("<|=|>");
         
-        Vehicle Truck = new Vehicle(GameWindow, car1, frog, 1);    
-        Vehicle Car = new Vehicle(GameWindow, car2, frog, 3);
+        Vehicle Truck = new Vehicle(gCanvas, car1, frog, 1);    
+        Vehicle Car = new Vehicle(gCanvas, car2, frog, 3);
         
         System.out.println(Delay);
         
@@ -120,9 +126,9 @@ public class Engine {
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                Vehicle newCar  = new Vehicle(GameWindow, car1, frog, Randomize(1, 10));
+                Vehicle newCar  = new Vehicle(gCanvas, car1, frog, Randomize(1, 10));
                 
-                GameWindow.repaint();
+                gCanvas.repaint();
             }
         }, 0, Delay);
         

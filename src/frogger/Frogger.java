@@ -1,8 +1,5 @@
 package frogger;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 /**
@@ -12,6 +9,8 @@ import javax.swing.JFrame;
 public class Frogger extends JFrame {
 
     public static void main(String[] args) {
+        //GameFrame Frame = new GameFrame();
+        
         Engine GameEngine = new Engine();
     }
 }
