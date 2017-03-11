@@ -7,6 +7,8 @@ package frogger;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -20,13 +22,16 @@ import javax.swing.JPanel;
  * @author timi
  */
 public class Vehicle {
+    private Font cFont = new Font("Seif", Font.PLAIN, 20);
+    
     public Vehicle(JPanel window, JLabel car, JLabel frog, int level) {
-        int vLevel = 450 - 50 * level;
-        car.setBounds(20, vLevel, 200, 100);
+        
+        int vLevel = 475 - 50 * level;
+        car.setBounds(20, vLevel, 200, 50);
         window.add(car);
         
         car.setForeground(Color.WHITE);
-        car.setFont(new Font("Seif", Font.PLAIN, 20));
+        car.setFont(cFont);
         
         Move(window, 50, car, frog, 140, 100);
     }
