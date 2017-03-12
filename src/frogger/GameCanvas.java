@@ -28,7 +28,6 @@ public class GameCanvas extends JPanel {
         this.add(goal);
         
         this.setBackground(Color.black);
-        
         this.setLayout(null);
     }
 

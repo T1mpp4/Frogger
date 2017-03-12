@@ -9,7 +9,6 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  *

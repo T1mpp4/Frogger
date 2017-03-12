@@ -1,21 +1,13 @@
 package frogger;
 
-import static frogger.Vehicle.Collision;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import javafx.concurrent.Task;
-import javafx.scene.control.Cell;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -66,7 +58,6 @@ public class Engine {
         gCanvas.add(wins);
         wins.setBounds(10, 27, 100, 12);
         
-        
         JLabel frog = new JLabel();
         frog.setText("@");
         frog.setForeground(Color.WHITE);
@@ -78,14 +69,10 @@ public class Engine {
                 
         gFrame.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-            
-            }
+            public void keyTyped(KeyEvent e) {}
 
             @Override
-            public void keyReleased(KeyEvent e) {
-            
-            }
+            public void keyReleased(KeyEvent e) {}
 
             @Override
             public void keyPressed(KeyEvent e) {
@@ -140,17 +127,13 @@ public class Engine {
                     i++;
                 }
                 
-                //Vehicle newCar  = new Vehicle(gCanvas, car1, frog, Randomize(1, 10));
                 int d = Randomize(150, 3000);
                 gCanvas.repaint();
             }
         }, 0, d);
-        
-        
     }
     
     public int Randomize(int low, int high) {
         return (int) (Math.random() * (high - low)) + low;
-
     }
 }
