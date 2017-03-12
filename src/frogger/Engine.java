@@ -10,6 +10,8 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.concurrent.Task;
+import javafx.scene.control.Cell;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,18 +29,21 @@ public class Engine {
     private int sizeY;
     private int winsq;
     private int deathsq;
+    private int carAmount;
     
     public Engine() {        
         this.sizeX = 20;
         this.sizeY = 20;
         
         this.cX = 400;
-        this.cY = 500;
+        this.cY = 522;
         
-        this.stepLen = 50.5;
+        this.stepLen = 50;
         
         this.deathsq = 0;
         this.winsq = 0;
+        
+        this.carAmount = 5;
         
         //Window GameWindow = new Window(this.stepLen);
         GameFrame gFrame = new GameFrame();
@@ -109,7 +114,7 @@ public class Engine {
     }
     
     public void driveCars(JPanel gCanvas, JLabel frog) {
-        int Delay = Randomize(100, 4000);
+        int d = 0;
         
         JLabel car1 = new JLabel();
         car1.setText("|=====|-| |");
@@ -119,18 +124,28 @@ public class Engine {
         
         Vehicle Truck = new Vehicle(gCanvas, car1, frog, 1);    
         Vehicle Car = new Vehicle(gCanvas, car2, frog, 3);
-        
-        System.out.println(Delay);
-        
+                
         Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                Vehicle newCar  = new Vehicle(gCanvas, car1, frog, Randomize(1, 10));
+                int i = 0;
+                Vehicle[] vArray = new Vehicle[carAmount];
+                JLabel[] cArray = new JLabel[carAmount];
                 
+                while(i < carAmount) {
+                    cArray[i] = new JLabel();
+                    cArray[i].setText("<|=|>");
+                    vArray[i] = new Vehicle(gCanvas, cArray[i], frog, Randomize(1, 9));
+                    i++;
+                }
+                
+                //Vehicle newCar  = new Vehicle(gCanvas, car1, frog, Randomize(1, 10));
+                int d = Randomize(150, 3000);
                 gCanvas.repaint();
             }
-        }, 0, Delay);
+        }, 0, d);
+        
         
     }
     

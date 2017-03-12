@@ -20,12 +20,11 @@ import javax.swing.JPanel;
  */
 public class GameCanvas extends JPanel {
     public GameCanvas() {
-        // Pointless
-        //setDoubleBuffered(true);
         JLabel goal = new JLabel();
-        goal.setText("|=========|");
+        goal.setText("| G O A L |");
         goal.setForeground(Color.WHITE);
         goal.setFont(new Font("Seif", Font.PLAIN, 20));
+        goal.setBounds(360, 2, 600, 50);
         this.add(goal);
         
         this.setBackground(Color.black);
@@ -41,7 +40,7 @@ public class GameCanvas extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
 
-        int firstRoad = 5;
+        int firstRoad = 3;
         int i = 0;
         int max = 10;
 

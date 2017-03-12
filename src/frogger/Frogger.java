@@ -11,6 +11,8 @@ public class Frogger extends JFrame {
     public static void main(String[] args) {
         //GameFrame Frame = new GameFrame();
         
-        Engine GameEngine = new Engine();
+        //Engine GameEngine = new Engine();
+        
+        System.out.println(new RandomizeDelay());
     }
 }
