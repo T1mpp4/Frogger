@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,6 +24,7 @@ public class Engine {
     private int winsq;
     private int deathsq;
     private int carAmount;
+    private boolean allowMove = true;
     
     public Engine() {        
         this.sizeX = 20;
@@ -35,7 +38,7 @@ public class Engine {
         this.deathsq = 0;
         this.winsq = 0;
         
-        this.carAmount = 5;
+        this.carAmount = 4;
         
         //Window GameWindow = new Window(this.stepLen);
         GameFrame gFrame = new GameFrame();
@@ -77,17 +80,19 @@ public class Engine {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    System.out.println(cY);
-                    cY -= stepLen;
-                    frog.setBounds(cX, cY, 20, 20);
-                    gCanvas.repaint();
+                    if(allowMove == true) {
+                        System.out.println(cY);
+                        cY -= stepLen;
+                        frog.setBounds(cX, cY, 20, 20);
+                        gCanvas.repaint();
+                    }
                 }
                 if(checkWin()) {
                     System.out.println("WIN!!"); //win animation :D
                     winsq += 1;
                     wins.setText("Wins: " + winsq);
                     gCanvas.repaint();
-                }             
+                }
             }
         });
     }
@@ -103,14 +108,14 @@ public class Engine {
     public void driveCars(JPanel gCanvas, JLabel frog) {
         int d = 0;
         
-        JLabel car1 = new JLabel();
+        /*JLabel car1 = new JLabel();
         car1.setText("|=====|-| |");
         
         JLabel car2 = new JLabel();
         car2.setText("<|=|>");
         
         Vehicle Truck = new Vehicle(gCanvas, car1, frog, 1);    
-        Vehicle Car = new Vehicle(gCanvas, car2, frog, 3);
+        Vehicle Car = new Vehicle(gCanvas, car2, frog, 3);*/
                 
         Timer t = new Timer();
         t.schedule(new TimerTask() {
@@ -122,15 +127,15 @@ public class Engine {
                 
                 while(i < carAmount) {
                     cArray[i] = new JLabel();
-                    cArray[i].setText("<|=|>");
-                    vArray[i] = new Vehicle(gCanvas, cArray[i], frog, Randomize(1, 9));
+                    cArray[i].setText("C A R");
+                    vArray[i] = new Vehicle(gCanvas, cArray[i], frog, Randomize(1, 10));
                     i++;
                 }
                 
-                int d = Randomize(150, 3000);
+                //int d = Randomize(150, 3000);
                 gCanvas.repaint();
             }
-        }, 0, d);
+        }, 0, 4000);
     }
     
     public int Randomize(int low, int high) {

@@ -24,17 +24,31 @@ public class Vehicle {
     
     public Vehicle(JPanel window, JLabel car, JLabel frog, int level) {
         
-        int vLevel = 475 - 50 * level;
-        car.setBounds(20, vLevel, 200, 50);
+        int cWidth = 100;
+        int cHeight = 35;
+        int vLevel = 512 - 50 * level;
+        
+        if(level % 2 == 0) {
+            car.setBounds(-100, vLevel, cWidth, cHeight);
+        } else {
+            car.setBounds(900, vLevel, cWidth, cHeight);
+        }
         window.add(car);
         
+        
         car.setForeground(Color.WHITE);
+        car.setBackground(Color.RED);
+        car.setOpaque(true);
         car.setFont(cFont);
         
-        Move(window, 50, car, frog, 140, 100);
+        if(level % 2 == 0) {
+            Move(window, 50, car, frog, cWidth, cHeight, 1);
+        } else {
+            Move(window, 50, car, frog, cWidth, cHeight, 0);
+        }
     }
     
-    public static void Move(JPanel window, int speed, JLabel object, JLabel frog, int vsizeX, int vsizeY) {
+    public static void Move(JPanel window, int speed, JLabel object, JLabel frog, int vsizeX, int vsizeY, int direction) {
         
         ActionListener actionListener = new ActionListener() {
             @Override
@@ -42,7 +56,11 @@ public class Vehicle {
                 int vX = object.getX();
                 int vY = object.getY();
                 
-                vX += 10;
+                if(direction == 1) {
+                    vX += 10;
+                } else {
+                    vX -= 10;
+                }
                 
                 object.setBounds(vX, vY, vsizeX, vsizeY);
                 
@@ -50,6 +68,7 @@ public class Vehicle {
                 
                 if(Collision(object, frog)) {
                     System.out.println("COLLISION");
+                    
                 }
             }
         };
