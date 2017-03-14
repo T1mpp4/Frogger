@@ -6,6 +6,12 @@
 package frogger;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -24,6 +30,15 @@ public class GameFrame extends JFrame{
         this.setTitle("Frogger");
         this.setVisible(true);
         this.getContentPane().setBackground(Color.black);
+        /*URL url;
+        try {
+            url = new URL("com/timi/resources/Tux.png");
+            Toolkit kit = Toolkit.getDefaultToolkit();
+            Image img = kit.createImage(url);
+            this.setIconImage(img);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
         this.pack();
 
         setLocationRelativeTo(null);
