@@ -21,6 +21,8 @@ import javax.swing.JPanel;
  */
 public class Vehicle {
     private Font cFont = new Font("Seif", Font.PLAIN, 20);
+    private static int deathc;
+    private static boolean isDead;
     
     public Vehicle(JPanel window, JLabel car, JLabel frog, int level) {
         
@@ -68,7 +70,7 @@ public class Vehicle {
                 
                 if(Collision(object, frog)) {
                     System.out.println("COLLISION");
-                    
+                    isDead = true;
                 }
             }
         };
@@ -79,7 +81,15 @@ public class Vehicle {
     public static boolean Collision(JLabel test_a, JLabel test_b){
         Rectangle rectB = test_b.getBounds();
         Rectangle result = SwingUtilities.computeIntersection(test_a.getX(), test_a.getY(), test_a.getWidth(), test_a.getHeight(), rectB);
-
+        
         return (result.getWidth() > 0 && result.getHeight() > 0);
+    }
+    
+    public static boolean isDead() {
+        return isDead;
+    }
+    
+    public static void reset() {
+        isDead = false;
     }
 }
