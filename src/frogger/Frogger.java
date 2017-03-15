@@ -1,5 +1,6 @@
 package frogger;
 
+import java.io.IOException;
 import javax.swing.JFrame;
 
 /**
@@ -8,7 +9,7 @@ import javax.swing.JFrame;
  */
 public class Frogger extends JFrame {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //GameFrame Frame = new GameFrame();
         
         Engine GameEngine = new Engine();

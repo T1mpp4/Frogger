@@ -26,8 +26,8 @@ public class Vehicle {
     
     public Vehicle(JPanel window, JLabel car, JLabel frog, int level) {
         
-        int cWidth = 50;
-        int cHeight = 35;
+        int cWidth = 150;
+        int cHeight = 45;
         int vLevel = 512 - 50 * level;
         
         if(level % 2 == 0) {
