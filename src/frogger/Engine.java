@@ -73,8 +73,9 @@ public class Engine {
         gCanvas.add(frog);
         frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
         
-        frog.setIcon(new ImageIcon("Images/Tux_1.png"));
-                
+        //frog.setIcon(new ImageIcon("Images/Tux_1.png"));
+        frog.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Tux_1.png")));  
+        
         driveCars(gCanvas, frog);
                 
         gFrame.addKeyListener(new KeyListener() {
@@ -178,9 +179,9 @@ public class Engine {
                     int carLevel = Randomize(1, 10);
                     cArray[i] = new JLabel();
                     if(carLevel % 2 == 0) {
-                        cArray[i].setIcon(new ImageIcon("Images/lumme2_1.png"));
+                        cArray[i].setIcon(new ImageIcon(getClass().getClassLoader().getResource("lumme2_1.png")));
                     } else {
-                        cArray[i].setIcon(new ImageIcon("Images/croco.png"));
+                        cArray[i].setIcon(new ImageIcon(getClass().getClassLoader().getResource("croco.png")));
                     }
                     
                     vArray[i] = new Vehicle(gCanvas, cArray[i], frog, carLevel);
