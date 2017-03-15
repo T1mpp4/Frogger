@@ -54,12 +54,13 @@ public class GameCanvas extends JPanel {
             g2.setStroke(new BasicStroke(3));
 
             if (i % 2 == 0) {
-                g.setColor(Color.WHITE);
-                g.drawRect(3, firstRoad + 50 * i, 793, 50);
-                //g.fillRect(3, firstRoad + 50 * i, 793, 50);
+                Color waterColor = new Color(64, 164, 223, 100);
+                g.setColor(waterColor);
+                g.fillRect(3, firstRoad + 50 * i, 793, 50);
             } else {
-                g2.setColor(Color.WHITE);
-                g2.drawRect(3, firstRoad + 50 * i, 793, 50);
+                Color groundColor = new Color(113,148,68, 100);
+                g2.setColor(groundColor);
+                g2.fillRect(3, firstRoad + 50 * i, 793, 50);
             }
             i++;
         }

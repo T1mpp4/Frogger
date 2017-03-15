@@ -26,7 +26,7 @@ public class Vehicle {
     
     public Vehicle(JPanel window, JLabel car, JLabel frog, int level) {
         
-        int cWidth = 100;
+        int cWidth = 50;
         int cHeight = 35;
         int vLevel = 512 - 50 * level;
         
@@ -39,8 +39,8 @@ public class Vehicle {
         
         
         car.setForeground(Color.WHITE);
-        car.setBackground(Color.RED);
-        car.setOpaque(true);
+        //car.setBackground(Color.RED);
+        car.setOpaque(false);
         car.setFont(cFont);
         
         if(level % 2 == 0) {

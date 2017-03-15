@@ -5,10 +5,14 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -29,9 +33,9 @@ public class Engine {
     private int carAmount;
     private boolean allowMove = true;
     
-    public Engine() {        
-        this.sizeX = 20;
-        this.sizeY = 20;
+    public Engine() throws IOException {        
+        this.sizeX = 35;
+        this.sizeY = 41;
         
         this.cX = 400;
         this.cY = 522;
@@ -39,7 +43,7 @@ public class Engine {
         this.oX = 400;
         this.oY = 522;
         
-        this.stepLen = 50;
+        this.stepLen = 52;
         
         this.deathsq = 0;
         this.winsq = 0;
@@ -67,14 +71,15 @@ public class Engine {
         gCanvas.add(wins);
         wins.setBounds(10, 27, 100, 12);
         
-        
         JLabel frog = new JLabel();
-        frog.setText("@");
+        //frog.setText("@");
         frog.setForeground(Color.WHITE);
         frog.setFont(new Font("Seif", Font.PLAIN, 20));
         gCanvas.add(frog);
         frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
         
+        frog.setIcon(new ImageIcon("Images/Tux_1.png"));
+                
         driveCars(gCanvas, frog);
                 
         gFrame.addKeyListener(new KeyListener() {
@@ -90,7 +95,7 @@ public class Engine {
                     if(allowMove == true) {
                         System.out.println(cY);
                         cY -= stepLen;
-                        frog.setBounds(cX, cY, 20, 20);
+                        frog.setBounds(cX, cY, sizeX, sizeY);
                         gCanvas.repaint();
                         
                         if(Vehicle.isDead()) {
@@ -175,9 +180,15 @@ public class Engine {
                 JLabel[] cArray = new JLabel[carAmount];
                 
                 while(i < carAmount) {
+                    int carLevel = Randomize(1, 10);
                     cArray[i] = new JLabel();
-                    cArray[i].setText("C A R");
-                    vArray[i] = new Vehicle(gCanvas, cArray[i], frog, Randomize(1, 10));
+                    if(carLevel % 2 == 0) {
+                        cArray[i].setIcon(new ImageIcon("Images/lumme2_1.png"));
+                    } else {
+                        cArray[i].setIcon(new ImageIcon("Images/croco.png"));
+                    }
+                    
+                    vArray[i] = new Vehicle(gCanvas, cArray[i], frog, carLevel);
                     i++;
                 }
                 
