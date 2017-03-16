@@ -19,14 +19,10 @@ import javax.swing.JPanel;
  * @author timi
  */
 public class GameCanvas extends JPanel {
+    public static JLabel wins;
+    public static JLabel deaths;
+    
     public GameCanvas() {
-        JLabel goal = new JLabel();
-        goal.setText("| G O A L |");
-        goal.setForeground(Color.WHITE);
-        goal.setFont(new Font("Seif", Font.PLAIN, 20));
-        goal.setBounds(360, 2, 600, 50);
-        this.add(goal);
-        
         this.setBackground(Color.black);
         this.setLayout(null);
     }
@@ -64,5 +60,31 @@ public class GameCanvas extends JPanel {
             }
             i++;
         }
+    }
+    
+    public void createGUI(JPanel gCanvas) {
+        this.deaths = new JLabel();
+        this.deaths.setText("Deaths: " + Engine.deathsq);
+        this.deaths.setForeground(Color.WHITE);
+        this.deaths.setFont(new Font("Seif", Font.PLAIN, 12));
+        gCanvas.add(this.deaths);
+        this.deaths.setBounds(10, 10, 100, 12);
+        
+        this.wins = new JLabel();
+        this.wins.setText("Wins: " + Engine.winsq);
+        this.wins.setForeground(Color.WHITE);
+        this.wins.setFont(new Font("Seif", Font.PLAIN, 12));
+        gCanvas.add(this.wins);
+        this.wins.setBounds(10, 27, 100, 12);
+        
+        JLabel goal = new JLabel();
+        goal.setText("| G O A L |");
+        goal.setForeground(Color.WHITE);
+        goal.setFont(new Font("Seif", Font.PLAIN, 20));
+        goal.setBounds(360, 2, 600, 50);
+        gCanvas.add(goal);
+        
+        gCanvas.validate();
+        gCanvas.repaint();
     }
 }

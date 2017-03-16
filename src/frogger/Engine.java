@@ -23,17 +23,16 @@ public class Engine {
     private double stepLen;
     private int sizeX;
     private int sizeY;
-    private int winsq;
-    private int deathsq;
+    public static int winsq;
+    public static int deathsq;
     private int carAmount;
     private boolean allowMove = true;
+    public static Font cFont = new Font("Seif", Font.PLAIN, 20);
+    
+    //public JLabel frog;
     
     public Engine() throws IOException {        
-        this.sizeX = 35;
-        this.sizeY = 41;
         
-        this.cX = 400;
-        this.cY = 522;
         
         this.oX = 400;
         this.oY = 522;
@@ -52,29 +51,9 @@ public class Engine {
         gFrame.add(gCanvas);
         gFrame.pack();
         
-        JLabel deaths = new JLabel();
-        deaths.setText("Deaths: " + this.deathsq);
-        deaths.setForeground(Color.WHITE);
-        deaths.setFont(new Font("Seif", Font.PLAIN, 12));
-        gCanvas.add(deaths);
-        deaths.setBounds(10, 10, 100, 12);
+        gCanvas.createGUI(gCanvas);
         
-        JLabel wins = new JLabel();
-        wins.setText("Wins: " + this.winsq);
-        wins.setForeground(Color.WHITE);
-        wins.setFont(new Font("Seif", Font.PLAIN, 12));
-        gCanvas.add(wins);
-        wins.setBounds(10, 27, 100, 12);
-        
-        JLabel frog = new JLabel();
-        //frog.setText("@");
-        frog.setForeground(Color.WHITE);
-        frog.setFont(new Font("Seif", Font.PLAIN, 20));
-        gCanvas.add(frog);
-        frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
-        
-        //frog.setIcon(new ImageIcon("Images/Tux_1.png"));
-        frog.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Tux_1.png")));  
+        Tux frog = new Tux(gCanvas);
         
         driveCars(gCanvas, frog);
                 
@@ -89,23 +68,15 @@ public class Engine {
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_SPACE) {
                     if(allowMove == true) {
-                        System.out.println(cY);
-                        cY -= stepLen;
-                        frog.setBounds(cX, cY, sizeX, sizeY);
+                        frog.Up();
                         gCanvas.repaint();
-                        
-                        if(Vehicle.isDead()) {
-                            deathsq += 1;
-                            deaths.setText("Deaths: " + deathsq);
-                            killGame(gCanvas, frog);
-                        }
                     }
                 }
-                if(checkWin()) {
+                if(checkWin(frog)) {
                     System.out.println("WIN!!");
                     
                     winsq += 1;
-                    wins.setText("Wins: " + winsq);
+                    GameCanvas.wins.setText("Wins: " + winsq);
                     killGame(gCanvas, frog);
                     gCanvas.repaint();
                 }
@@ -116,10 +87,14 @@ public class Engine {
                 }
             }
         });
+        
+        int crocoLevel = 1;
+        Croco croc = new Croco(gCanvas, frog, crocoLevel);
+        gCanvas.add(croc);
     }
     
-    public boolean checkWin() {
-        if(this.cY <= 30) {
+    public boolean checkWin(JLabel frog) {
+        if(Tux.cY <= 30) {
             return true;
         } else {
             return false;
@@ -128,40 +103,15 @@ public class Engine {
     
     private void killGame(JPanel gCanvas, JLabel frog) {
         gCanvas.removeAll();
+        frog = null;
         
-        this.cX = this.oX;
-        this.cY = this.oY;
+        Tux.cX = this.oX;
+        Tux.cY = this.oY;
         
-        frog.setText("@");
-        frog.setForeground(Color.WHITE);
-        frog.setFont(new Font("Seif", Font.PLAIN, 20));
-        gCanvas.add(frog);
-        frog.setBounds(this.oX, this.oY, this.sizeX, this.sizeY);
+        frog = new Tux(gCanvas);
         
-        JLabel deaths = new JLabel();
-        deaths.setText("Deaths: " + this.deathsq);
-        deaths.setForeground(Color.WHITE);
-        deaths.setFont(new Font("Seif", Font.PLAIN, 12));
-        gCanvas.add(deaths);
-        deaths.setBounds(10, 10, 100, 12);
-        
-        JLabel wins = new JLabel();
-        wins.setText("Wins: " + this.winsq);
-        wins.setForeground(Color.WHITE);
-        wins.setFont(new Font("Seif", Font.PLAIN, 12));
-        gCanvas.add(wins);
-        wins.setBounds(10, 27, 100, 12);
-        
-        Vehicle.reset();
-        
-        gCanvas.validate();
-        
-        JLabel goal = new JLabel();
-        goal.setText("| G O A L |");
-        goal.setForeground(Color.WHITE);
-        goal.setFont(new Font("Seif", Font.PLAIN, 20));
-        goal.setBounds(360, 2, 600, 50);
-        gCanvas.add(goal);
+        //gameCanvas.createGUI(gCanvas);
+        gCanvas.repaint();
     }
     
     public void driveCars(JPanel gCanvas, JLabel frog) {
@@ -172,22 +122,19 @@ public class Engine {
             @Override
             public void run() {
                 int i = 0;
-                Vehicle[] vArray = new Vehicle[carAmount];
-                JLabel[] cArray = new JLabel[carAmount];
+                Croco[] cArray = new Croco[carAmount];
+                Lumme[] lArray = new Lumme[carAmount];
                 
                 while(i < carAmount) {
-                    int carLevel = Randomize(1, 10);
-                    cArray[i] = new JLabel();
-                    if(carLevel % 2 == 0) {
-                        cArray[i].setIcon(new ImageIcon(getClass().getClassLoader().getResource("lumme2_1.png")));
-                    } else {
-                        cArray[i].setIcon(new ImageIcon(getClass().getClassLoader().getResource("croco.png")));
-                    }
+                    int Level = Randomize(1, 10);
                     
-                    vArray[i] = new Vehicle(gCanvas, cArray[i], frog, carLevel);
+                    if(Level % 2 != 0) {
+                        cArray[i] = new Croco(gCanvas, frog, Level);
+                    } else {
+                        lArray[i] = new Lumme(gCanvas, frog, Level);
+                    }
                     i++;
                 }
-                
                 gCanvas.repaint();
             }
         }, 0, 4000);
