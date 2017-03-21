@@ -17,15 +17,15 @@ import javax.swing.Timer;
  *
  * @author timi
  */
-public class Lumme {
+public class Lumme extends Pos {
     private int level;
     private JLabel lumme;
     private JPanel gCanvas;
     
-    private int lummeX;
-    private int lummeY;
+    public int lummeX;
+    public int lummeY;
     
-    public Lumme(JPanel window, JLabel frog, int level_given) {
+    public Lumme(JPanel window, Tux frog, int level_given) {
         this.level = level_given;
         
         int cWidth = 148;
@@ -40,14 +40,14 @@ public class Lumme {
         window.add(this.lumme);
         
         this.lumme.setForeground(Color.WHITE);
-        //car.setBackground(Color.RED);
-        this.lumme.setOpaque(false);
+        this.lumme.setBackground(Color.RED);
+        this.lumme.setOpaque(true);
         this.lumme.setFont(Engine.cFont);
         
         Move(window, 1, this.lumme, frog, cWidth, cHeight);
     }
     
-    public void Move(JPanel window, int speed, JLabel object, JLabel frog, int vsizeX, int vsizeY) {
+    public void Move(JPanel window, int speed, JLabel object, Tux frog, int vsizeX, int vsizeY) {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -55,6 +55,9 @@ public class Lumme {
                 lummeY = object.getY();
                 
                 lummeX -= 5;
+                if(frog.lumpeella) {
+                    frog.Left(1);
+                }
                 
                 object.setBounds(lummeX, lummeY, vsizeX, vsizeY);
                 
@@ -64,6 +67,17 @@ public class Lumme {
                     System.out.println("COLLISION");
                     //isDead = true;
                 }*/
+                Pos.setPosition(lummeX, lummeY);
+                if(Pos.Collision(lumme, frog.frog) && Tux.level % 2 == 0 && Tux.level > 0) {
+                    //KILL GAME
+                    System.out.println("pingiivi lumpeella");
+                    frog.lumpeella = true;
+                } else if(Pos.Collision(lumme, frog.frog) == false && Tux.level % 2 == 0 && Tux.level > 0) {
+                    System.out.println("dead penguin");
+                    frog.lumpeella = false;
+                }
+                
+                System.out.println(Tux.level);
             }
         };
         Timer timer = new Timer(88, actionListener );

@@ -26,7 +26,7 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
         this.getContentPane().setBackground(Color.black);
         
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Tux.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Tux_1.png")));
         
         this.pack();
 

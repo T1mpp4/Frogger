@@ -15,16 +15,19 @@ import javax.swing.JPanel;
  *
  * @author timi
  */
-public class Tux extends JLabel {
+public class Tux {
     private JPanel gCanvas;
     
-    public static int cX;
-    public static int cY;
+    public int cX;
+    public int cY;
+    public boolean lumpeella;
     private int sizeX;
     private int sizeY;
     private int stepLen;
     
     public JLabel frog;
+    
+    public static int level;
     
     public int[] loc;
     
@@ -35,30 +38,33 @@ public class Tux extends JLabel {
         this.cX = 400;
         this.cY = 522;
         this.stepLen = 52;
+        this.lumpeella = false;
         
         this.frog = new JLabel();
-        //frog.setText("@");
         this.frog.setForeground(Color.WHITE);
         this.frog.setFont(new Font("Seif", Font.PLAIN, 20));
         gCanvas.add(this.frog);
         this.frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
         
-        //frog.setIcon(new ImageIcon("Images/Tux_1.png"));
         this.frog.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Tux_1.png")));  
-
-        //gCanvas.repaint();
     }
     
     public void Up() {
-        System.out.println(cY);
+        System.out.println(this.cY);
         this.cY -= this.stepLen;
+        this.level += 1;
         this.frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
         this.gCanvas.repaint();
-
-        /*if(Vehicle.isDead()) {
-            deathsq += 1;
-            deaths.setText("Deaths: " + deathsq);
-            killGame(gCanvas, this.frog);
-        }*/
+    }
+    
+    public void Left(int lummeSpeed) {
+        this.cX -= lummeSpeed;
+        this.frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
+        this.gCanvas.repaint();
+    }
+    
+    public int[] getPos() {
+        int[] posxy = {this.cX, this.cY};
+        return posxy;
     }
 }

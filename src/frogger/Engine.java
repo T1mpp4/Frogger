@@ -28,12 +28,15 @@ public class Engine {
     private int carAmount;
     private boolean allowMove = true;
     public static Font cFont = new Font("Seif", Font.PLAIN, 20);
+    public static Tux frog;
+    
+    public Pos frogPos;
+    
+    public GameCanvas gCanvas;
     
     //public JLabel frog;
     
-    public Engine() throws IOException {        
-        
-        
+    public Engine() throws IOException {
         this.oX = 400;
         this.oY = 522;
         
@@ -46,14 +49,14 @@ public class Engine {
         
         //Window GameWindow = new Window(this.stepLen);
         GameFrame gFrame = new GameFrame();
-        GameCanvas gCanvas = new GameCanvas();
+        this.gCanvas = new GameCanvas();
         
         gFrame.add(gCanvas);
         gFrame.pack();
         
         gCanvas.createGUI(gCanvas);
         
-        Tux frog = new Tux(gCanvas);
+        this.frog = new Tux(gCanvas);
         
         driveCars(gCanvas, frog);
                 
@@ -70,6 +73,7 @@ public class Engine {
                     if(allowMove == true) {
                         frog.Up();
                         gCanvas.repaint();
+                        frogPos.setPosition(cY, cX);
                     }
                 }
                 if(checkWin(frog)) {
@@ -77,44 +81,45 @@ public class Engine {
                     
                     winsq += 1;
                     GameCanvas.wins.setText("Wins: " + winsq);
-                    killGame(gCanvas, frog);
+                    killGame();
                     gCanvas.repaint();
                 }
                 
                 if(e.getKeyCode() == KeyEvent.VK_F1) {
                     System.out.println("1");
-                    killGame(gCanvas, frog);
+                    killGame();
                 }
             }
         });
         
         int crocoLevel = 1;
         Croco croc = new Croco(gCanvas, frog, crocoLevel);
-        gCanvas.add(croc);
+        //gCanvas.add(croc);
     }
     
-    public boolean checkWin(JLabel frog) {
-        if(Tux.cY <= 30) {
+    public boolean checkWin(Tux frog) {
+        if(frog.cY <= 30) {
             return true;
         } else {
             return false;
         }
     }
     
-    private void killGame(JPanel gCanvas, JLabel frog) {
+    public void killGame() {
         gCanvas.removeAll();
         frog = null;
         
-        Tux.cX = this.oX;
-        Tux.cY = this.oY;
+        frog.cX = this.oX;
+        frog.cY = this.oY;
+        Tux.level = 0;
         
-        frog = new Tux(gCanvas);
+        this.frog = new Tux(gCanvas);
         
         //gameCanvas.createGUI(gCanvas);
-        gCanvas.repaint();
+        this.gCanvas.repaint();
     }
     
-    public void driveCars(JPanel gCanvas, JLabel frog) {
+    public void driveCars(JPanel gCanvas, Tux frog) {
         int d = 0;
                 
         Timer t = new Timer();

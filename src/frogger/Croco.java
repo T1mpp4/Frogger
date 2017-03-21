@@ -8,6 +8,9 @@ package frogger;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,15 +20,15 @@ import javax.swing.Timer;
  *
  * @author timi
  */
-public class Croco {
+public class Croco extends Pos {
     private int level;
     private JLabel croco;
     private JPanel gCanvas;
     
-    private int crocoX;
-    private int crocoY;
+    public int crocoX;
+    public int crocoY;
     
-    public Croco(JPanel window, JLabel frog, int level_given) {
+    public Croco(JPanel window, Tux frog, int level_given) {
         this.level = level_given;
         
         int cWidth = 148;
@@ -47,7 +50,7 @@ public class Croco {
         Move(window, 1, this.croco, frog, cWidth, cHeight);
     }    
     
-    public void Move(JPanel window, int speed, JLabel object, JLabel frog, int vsizeX, int vsizeY) {
+    public void Move(JPanel window, int speed, JLabel object, Tux frog, int vsizeX, int vsizeY) {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -64,6 +67,12 @@ public class Croco {
                     System.out.println("COLLISION");
                     //isDead = true;
                 }*/
+                
+                Pos.setPosition(crocoX, crocoY);
+                if(Pos.Collision(croco, frog.frog)) {
+                    //KILL GAME
+                    System.out.println("dead penguin");
+                }
             }
         };
         Timer timer = new Timer(88, actionListener );
