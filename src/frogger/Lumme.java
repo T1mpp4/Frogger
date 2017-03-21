@@ -56,7 +56,7 @@ public class Lumme extends Pos {
                 
                 lummeX -= 5;
                 if(frog.lumpeella) {
-                    frog.Left(1);
+                    frog.Left(2);
                 }
                 
                 object.setBounds(lummeX, lummeY, vsizeX, vsizeY);

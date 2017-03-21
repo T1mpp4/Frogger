@@ -31,7 +31,7 @@ public class Tux {
     
     public int[] loc;
     
-    public Tux(JPanel gCanvas) {
+    public Tux(JPanel gCanvas, String col) {
         this.gCanvas = gCanvas;
         this.sizeX = 35;
         this.sizeY = 41;
@@ -46,7 +46,11 @@ public class Tux {
         gCanvas.add(this.frog);
         this.frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
         
-        this.frog.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Tux_1.png")));  
+        if(col.equals("p")) {
+            this.frog.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Tux_2.png")));
+        } else {
+            this.frog.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Tux_1.png")));  
+        }
     }
     
     public void Up() {
@@ -57,7 +61,7 @@ public class Tux {
         this.gCanvas.repaint();
     }
     
-    public void Left(int lummeSpeed) {
+    public void Left(double lummeSpeed) {
         this.cX -= lummeSpeed;
         this.frog.setBounds(this.cX, this.cY, this.sizeX, this.sizeY);
         this.gCanvas.repaint();

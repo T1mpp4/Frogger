@@ -36,7 +36,7 @@ public class Engine {
     
     //public JLabel frog;
     
-    public Engine() throws IOException {
+    public Engine(String colorset) throws IOException {
         this.oX = 400;
         this.oY = 522;
         
@@ -56,7 +56,7 @@ public class Engine {
         
         gCanvas.createGUI(gCanvas);
         
-        this.frog = new Tux(gCanvas);
+        this.frog = new Tux(gCanvas, colorset);
         
         driveCars(gCanvas, frog);
                 
@@ -113,7 +113,7 @@ public class Engine {
         frog.cY = this.oY;
         Tux.level = 0;
         
-        this.frog = new Tux(gCanvas);
+        this.frog = new Tux(gCanvas, "w");
         
         //gameCanvas.createGUI(gCanvas);
         this.gCanvas.repaint();
